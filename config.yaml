@@ -1,0 +1,33 @@
+gcp:
+  project_id: "your-gcp-project-id"
+  region: "us-central1"
+  bucket: "your-project-id-spark-batch"
+
+data:
+  # NYC TLC Trip Record Data (public)
+  source_urls:
+    - "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
+    - "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-02.parquet"
+    - "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-03.parquet"
+    - "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-04.parquet"
+    - "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-05.parquet"
+    - "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-06.parquet"
+  raw_path: "gs://your-project-id-spark-batch/raw/yellow_taxi/"
+  processed_path: "gs://your-project-id-spark-batch/processed/yellow_taxi/"
+
+  # Zone lookup for broadcast join
+  zone_lookup_url: "https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
+
+bigquery:
+  dataset: "nyc_taxi_analytics"
+  tables:
+    trips_cleaned: "trips_cleaned"
+    hourly_stats: "hourly_stats"
+    zone_revenue: "zone_revenue"
+    daily_summary: "daily_summary"
+    driver_patterns: "driver_patterns"
+
+spark:
+  app_name: "NYCTaxiBatchPipeline"
+  shuffle_partitions: 200
+  broadcast_threshold: "50MB"
